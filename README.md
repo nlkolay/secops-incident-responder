@@ -41,3 +41,20 @@
 git clone https://github.com/nlkolay/secops-incident-responder.git /opt/sentinel
 cd /opt/sentinel
 ```
+### 2. Конфигурация
+Наполните файл конфигурации config.json.
+### 3. Настройка службы systemd
+Для обеспечения непрерывной работы создайте системную службу:
+```
+cp sentinel.service /etc/systemd/system/
+systemctl daemon-reload
+systemctl enable --now sentinel.service
+```
+
+##📊 Проверка работы
+
+Просмотр заблокированных адресов в ядре Linux:
+`nft list set inet sentinel blacklist`
+
+Ручной просмотр журнала работы службы:
+`journalctl -u sentinel.service -f`
