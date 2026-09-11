@@ -1,0 +1,18 @@
+# Системный юнит для автозапуска и управления демоном через systemd
+[Unit]
+Description=Security Incident Responder Sentinel
+After=network.target nftables.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/sentinel
+ExecStart=/usr/bin/python3 /opt/sentinel/sentinel.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
